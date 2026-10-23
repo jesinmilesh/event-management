@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventHub - Event Management & Registration</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-icon">📅</span>
+        <div>
+          <h1>EventHub</h1>
+          <p class="subtitle">Campus & Community Event Portal</p>
+        </div>
+      </div>
+      <div class="user-section">
+        <div id="userInfo" class="user-badge guest">
+          <span class="status-dot"></span>
+          <span id="userStatusText">Guest (Login to Register)</span>
+        </div>
+        <button id="authBtn" class="btn btn-primary" onclick="openAuthModal()">Login</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="page-header">
+      <div>
+        <h2>Upcoming Events</h2>
+        <p>Explore campus events, track real-time seat availability, and reserve your spot.</p>
+      </div>
+      <button id="addEventBtn" class="btn btn-success" onclick="openAddEventModal()">
+        <span>➕</span> Host New Event
+      </button>
+    </div>
+
+    <!-- Events Grid -->
+    <div id="eventsGrid" class="events-grid">
+      <div class="loading-state">Loading upcoming events...</div>
+    </div>
+  </main>
+
+  <!-- MODAL: Create Event -->
+  <div id="eventModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Host New Event</h2>
+        <button class="close-btn" onclick="closeEventModal()">&times;</button>
+      </div>
+      <form id="eventForm" onsubmit="handleCreateEvent(event)">
+        <div class="form-group">
+          <label>Event Title *</label>
+          <input type="text" id="eventTitle" placeholder="e.g. AI & Robotics Symposium" required />
+        </div>
+        <div class="form-group">
+          <label>Description *</label>
+          <textarea id="eventDesc" rows="3" placeholder="Brief event description" required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date *</label>
+            <input type="date" id="eventDate" required />
+          </div>
+          <div class="form-group">
+            <label>Time *</label>
+            <input type="text" id="eventTime" placeholder="e.g. 10:00 AM" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Venue *</label>
+            <input type="text" id="eventVenue" placeholder="Auditorium Hall A" required />
+          </div>
+          <div class="form-group">
+            <label>Max Capacity *</label>
+            <input type="number" id="eventCapacity" min="1" placeholder="50" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Organizer *</label>
+          <input type="text" id="eventOrganizer" placeholder="Tech Society" required />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeEventModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Auth -->
+  <div id="authModal" class="modal-backdrop hidden">
+    <div class="modal-card auth-card">
+      <div class="modal-header">
+        <h2 id="authTitle">Sign In</h2>
+        <button class="close-btn" onclick="closeAuthModal()">&times;</button>
+      </div>
+      <div class="demo-creds">
+        <span>💡 <strong>Quick Login:</strong> <code>user@example.com</code> / <code>Password@123</code> (Admin: <code>admin@example.com</code>)</span>
+      </div>
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="authEmail" value="user@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="authPassword" value="Password@123" required />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeAuthModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>
